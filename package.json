@@ -1,0 +1,19 @@
+{
+  "name": "docker-hotelier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "pm2 start pm2.json --no-daemon",
+    "start-dev": "nodemon src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.9"
+  },
+  "dependencies": {
+    "fastify": "^2.14.1"
+  }
+}

@@ -1,19 +1,34 @@
 {
-  "name": "docker-hotelier",
-  "version": "1.0.0",
+  "name": "hotelier",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "watch": "pm2 start pm2.json --no-daemon",
-    "start-dev": "nodemon src/app.ts"
+    "start:docker": "pm2 start pm2.json --no-daemon",
+    "build-ts": "tsc",
+    "start:dev": "npm run clean && npm run build-ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "watch-node": "nodemon dist",
+    "watch-ts": "tsc -w",
+    "clean": "rimraf ./dist"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dmitry Churkin",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.0.9"
+    "@types/lodash.merge": "^4.6.6",
+    "@types/mongoose": "^5.7.22",
+    "@types/node": "^14.0.11",
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
   },
   "dependencies": {
-    "fastify": "^2.14.1"
+    "apollo-datasource-mongodb": "^0.2.6",
+    "apollo-server-cache-redis": "^1.2.1",
+    "apollo-server-fastify": "^2.14.2",
+    "dotenv": "^8.2.0",
+    "fastify": "^2.14.1",
+    "lodash.merge": "^4.6.2",
+    "mongoose": "^5.9.18"
   }
 }

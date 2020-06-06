@@ -1,9 +1,33 @@
 version: '3'
 services:
-    hotelier-dev:
-        build: .
-        volumes:
-            - .:/app
-            - /app/node_modules
+    redis:
+        container_name: redis
+        image: redis
+        restart: always
         ports:
-            - "3000:3000"
+          - "6379:6379"
+    database:
+        container_name: database
+        image: mongo:latest
+        restart: always
+        ports:
+          - "27017:27017"
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: secret
+          MONGO_INITDB_DATABASE: hotelier
+    # hotelier-dev:
+    #     build: .
+    #     volumes:
+    #         - .:/app
+    #         - /app/node_modules
+    #     ports:
+    #         - "3000:3000"
+    # proxy:
+    #     container_name: proxy
+    #     build:
+    #         context: ./nginx
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         - "80:80"
+    #         - "443:443"

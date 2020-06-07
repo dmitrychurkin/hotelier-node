@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import globalConfig from '../config';
+import mongoose from "mongoose";
+import globalConfig from "../config";
 
 const { URI, options } = globalConfig.database;
 

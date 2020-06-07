@@ -1,5 +1,5 @@
 export default {
   Query: {
-    user: () => ({ name: 'Dmitry', age: 32 })
-  }
+    user: () => ({ name: "Dmitry", age: 32 }),
+  },
 };

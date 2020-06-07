@@ -1,24 +1,12 @@
 import fastify from "fastify";
-import { ApolloServer } from 'apollo-server-fastify';
+import { ApolloServer } from "apollo-server-fastify";
+import { RedisCache } from "apollo-server-cache-redis";
 import { Server, IncomingMessage, ServerResponse } from "http";
 
-import connection from './connection';
-import appGraphQL from './graphql'
+import connection from "./connection";
+import appGraphQL from "./graphql";
 
-// const { DB_HOST, DB_PORT, DB_NAME, PORT } = process.env;
-
-
-// mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`, { useNewUrlParser: true });
-// const { connection } = mongoose
-// connection.on('error', err => {
-//   console.error(err);
-//   process.exit(1);
-// });
-// connection.once('open', () => {
-//   console.log('Database connection established');
-// });
-
-const { NODE_ENV, PORT } = process.env
+const { NODE_ENV, PORT, REDIS_HOST, REDIS_PORT } = process.env;
 
 const app: fastify.FastifyInstance<
   Server,
@@ -26,15 +14,20 @@ const app: fastify.FastifyInstance<
   ServerResponse
 > = fastify({ logger: NODE_ENV !== "production" });
 
-const gqlServer = new ApolloServer({
-  ...appGraphQL
-});
-
 (async () => {
-  app.register(gqlServer.createHandler());
   try {
     await connection();
-    const address = await app.listen(parseInt(PORT || "3000"), "::");
+    const address = await app
+      .register(
+        new ApolloServer({
+          ...appGraphQL,
+          cache: new RedisCache({
+            host: REDIS_HOST,
+            port: REDIS_PORT,
+          }),
+        }).createHandler()
+      )
+      .listen(parseInt(PORT || "3000"), "::");
     app.log.info(`Server listening on ${address}`);
   } catch (err) {
     app.log.error(err);

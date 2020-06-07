@@ -1,15 +1,17 @@
 {
-    "apps" : [{
-        "name": "hotelier-dev",
-        "script": "./src/index.ts",
-        "watch": true,
-        "exec_mode": "cluster",
-        "instances": "max",
-        "autorestart": true,
-        "ignore_watch" : ["node_modules"],
-        "env": {
-            "PORT": 3000,
-            "NODE_ENV": "development"
-        }
-    }]
+  "apps": [
+    {
+      "name": "hotelier-dev",
+      "script": "./src/index.ts",
+      "watch": true,
+      "exec_mode": "cluster",
+      "instances": "max",
+      "autorestart": true,
+      "ignore_watch": ["node_modules"],
+      "env": {
+        "PORT": 3000,
+        "NODE_ENV": "development"
+      }
+    }
+  ]
 }

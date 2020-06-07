@@ -1,5 +1,3 @@
-import Database from './db';
+import Database from "./db";
 
-export default () => Promise.all([
-  Database.establish()
-]);
+export default () => Promise.all([Database.establish()]);

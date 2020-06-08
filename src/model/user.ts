@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+export const ROLES = { OWNER: 0, ADMIN: 1, WORKER: 2 };
+
 export default model(
   "User",
   new Schema({
@@ -26,6 +28,12 @@ export default model(
       type: String,
       required: true,
       maxlength: 100,
+    },
+    role: {
+      type: String,
+      enum: Object.values(ROLES),
+      required: true,
+      default: ROLES.WORKER,
     },
   })
 );
